@@ -1,4 +1,3 @@
-// Enable ES Modules in package.json with "type": "module"
 import makeWASocket, { useSingleFileAuthState } from "@adiwajshing/baileys";
 import qrcode from "qrcode-terminal";
 import fs from "fs";
@@ -23,7 +22,6 @@ const startBot = async () => {
     }
   });
 
-  // 🎯 Listen for messages
   sock.ev.on("messages.upsert", async ({ messages }) => {
     const msg = messages[0];
     if (!msg.message) return;
@@ -34,7 +32,7 @@ const startBot = async () => {
 
     const command = text.trim().toLowerCase().split(" ")[0];
 
-    // 📌 MENU COMMAND
+    // 📌 MENU
     if (command === ".menu" || command === ".help") {
       let menuMsg = `
 ╔═══════════════════╗
@@ -43,31 +41,25 @@ const startBot = async () => {
 
 *Available Commands:*
 
-╔═══════════════════╗
-🌐 *General Commands*:
-║ ➤ .help or .menu
-║ ➤ .ping
-║ ➤ .alive
-║ ➤ .tts <text>
-║ ➤ .owner
-║ ➤ .joke
-║ ➤ .quote
-║ ➤ .fact
-║ ➤ .weather <city>
-║ ➤ .news
-║ ➤ .attp <text>
-║ ➤ .lyrics <song_title>
-║ ➤ .8ball <question>
-║ ➤ .groupinfo
-║ ➤ .staff or .admins 
-║ ➤ .vv
-║ ➤ .trt <text> <lang>
-║ ➤ .ss <link>
-║ ➤ .jid
-╚═══════════════════╝ 
+🌐 General Commands: .help, .ping, .alive, .tts <text>, .owner, .joke, .quote, .fact, .weather <city>, .news, .lyrics <song>, .groupinfo ...
 
-👮‍♂️ *Admin Commands*:
-... (rest of your commands here) ...
+👮 Admin Commands: .ban, .kick, .mute, .warn, .tagall, .chatbot, .welcome <on/off> ...
+
+🔒 Owner Commands: .mode, .autostatus, .setpp <image>, .autoreact ...
+
+🎨 Image/Sticker: .sticker, .blur, .meme, .emojimix, .take ...
+
+🎮 Games: .tictactoe, .hangman, .truth, .dare ...
+
+🤖 AI: .gpt <q>, .gemini <q>, .imagine <prompt>, .flux <prompt>
+
+🎯 Fun: .compliment, .insult, .flirt, .shayari, .simp ...
+
+🔤 Textmaker: .metallic, .neon, .glitch, .fire, .blackpink ...
+
+📥 Downloader: .play, .song, .ytmp4 <link>, .instagram <link>, .facebook <link> ...
+
+💻 Github: .git, .github, .repo, .script
       `;
 
       await sock.sendMessage(from, {
@@ -76,25 +68,24 @@ const startBot = async () => {
       });
     }
 
-    // 📌 PING COMMAND
+    // 📌 PING
     if (command === ".ping") {
       await sock.sendMessage(from, { text: "🏓 Pong! Bot is active." });
     }
 
-    // 📌 OWNER COMMAND
+    // 📌 OWNER INFO
     if (command === ".owner") {
       await sock.sendMessage(from, {
         text: `👑 Owner: ${config.ownerName}\n📞 Numbers: ${config.ownerNumbers.join(", ")}`
       });
     }
 
-    // 📌 AI CHATBOT COMMAND (.gpt)
+    // 📌 AI CHATBOT (.gpt)
     if (command === ".gpt") {
       const question = text.replace(".gpt", "").trim();
       if (!question) return sock.sendMessage(from, { text: "❌ Please ask something after .gpt" });
 
       try {
-        // Demo using free API (you can replace with your own key)
         let res = await fetch(`https://api.affiliateplus.xyz/api/chatbot?message=${encodeURIComponent(question)}&botname=${config.botName}&ownername=${config.ownerName}`);
         let data = await res.json();
 
