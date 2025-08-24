@@ -1,0 +1,7 @@
+```bash
+mkdir lib
+echo "// Helper or module files go here" > lib/.gitkeep
+git add lib/.gitkeep
+git commit -m "Add lib folder with .gitkeep"
+git push
+```
