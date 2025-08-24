@@ -1,0 +1,7 @@
+```bash
+mkdir session
+echo "# Folder to store WhatsApp session files" > session/.gitkeep
+git add session/.gitkeep
+git commit -m "Add session folder with .gitkeep"
+git push
+```
