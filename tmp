@@ -1,0 +1,6 @@
+bash
+mkdir tmp
+echo "# Temporary folder for bot runtime" > tmp/.gitkeep
+git add tmp/.gitkeep
+git commit -m "Add tmp folder with .gitkeep"
+git push
